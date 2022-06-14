@@ -1,0 +1,4 @@
+# By default setuptools does not include the requirements.txt
+# in the distribution, but we do need it to run setup.py
+
+include requirements.txt

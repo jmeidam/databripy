@@ -1,0 +1,29 @@
+{
+  "num_workers": 8,
+  "cluster_name": "databripy",
+  "spark_version": "9.1.x-scala2.12",
+  "spark_conf": {
+    "spark.databricks.delta.preview.enabled": "true"
+  },
+  "node_type_id": "Standard_DS3_v2",
+  "driver_node_type_id": "Standard_DS3_v2",
+  "ssh_public_keys": [],
+  "custom_tags": {},
+  "cluster_log_conf": {
+    "dbfs": {
+      "destination": "dbfs:/cluster-logs/databripy"
+    }
+  },
+  "spark_env_vars": {
+    "some_key": "{{secrets/databripy/some_key}}"
+  },
+  "autotermination_minutes": 30,
+  "enable_elastic_disk": true,
+  "init_scripts": [
+    {
+      "dbfs": {
+        "destination": "dbfs:/FileStore/databripy/config/cluster_init.sh"
+      }
+    }
+  ]
+}
