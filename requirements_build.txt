@@ -1,6 +1,7 @@
-pyspark==3.1.2
-pytest==6.1.2
-pytest-mock==3.3.1
+pyspark==3.2.1
+pytest==7.1.2
+pytest-mock==3.7.0
 pytest-spark==0.6.0
-Sphinx==4.3.2
+Sphinx==5.0.1
 sphinx-rtd-theme==1.0.0
+faker==13.13.0
