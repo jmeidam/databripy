@@ -5,9 +5,9 @@ from databripy import etl
 
 # COMMAND ----------
 # Parse parameters
-dbutils.widgets.text("path_raw_root", "", "Root path to raw data")
+dbutils.widgets.text("path_raw_root", "/dbfs/data/raw", "Root path to raw data")
 path_raw_root = dbutils.widgets.get("path_raw_root")
-dbutils.widgets.text("path_processed_root", "", "Root path to processed data")
+dbutils.widgets.text("path_processed_root", "/dbfs/data/processed", "Root path to processed data")
 path_processed_root = dbutils.widgets.get("path_processed_root")
 
 # COMMAND ----------

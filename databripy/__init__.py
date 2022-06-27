@@ -1,6 +1,6 @@
 __version__ = 'v0.1.0'
 
-__title__ = 'Databricks python'
+__title__ = 'databripy'
 __description__ = 'Repo for testing connections and such with Databricks'
 __uri__ = 'https://github.com/jmeidam/databripy'
 __doc__ = __description__ + ' <' + __uri__ + '>'
