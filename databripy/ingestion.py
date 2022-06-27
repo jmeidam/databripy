@@ -15,7 +15,7 @@ def add_options_to_spark_reader(reader: DataFrameReader, data_format: str, optio
         Dictionary containing options recognised by the DataFrameReader option() or schema() methods
     """
     logger = logging.getLogger(__name__)
-    for key, value in options:
+    for key, value in options.items():
         if key == 'schema':
             logger.debug(f'Setting schema for {data_format} reader')
             reader = reader.schema(value)
