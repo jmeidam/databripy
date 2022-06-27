@@ -1,3 +1,8 @@
+# Databricks notebook source
+# MAGIC %pip install faker
+
+# COMMAND ----------
+
 import os
 import hashlib
 import random
@@ -18,17 +23,15 @@ def customer_name_and_id(fk_obj: Faker) -> (str, str):
 def product_name_and_id(fk_obj: Faker) -> (str, str):
     part1 = fk_obj.word(part_of_speech='adjective')
     part2 = fk_obj.word(ext_word_list=[
-        'kajigger', 'thing', 'doodad', 'machine', 'generator',
+        'kajigger', 'thing', 'doodad', 'machine', 'generator', 
         'box', 'cover', 'phone', 'monitor', 'inducer', 'hub', 'apparatus',
         'visualizer', 'radiator'
     ])
     chance = random.randint(0, 99)
     if chance < 33:
-        sep = ' '
-    elif 33 <= chance < 66:
         sep = '-'
     else:
-        sep = ''
+        sep = ' '
 
     if chance < 20:
         part0 = fk_obj.word(part_of_speech='adjective')
@@ -174,3 +177,43 @@ def create_basket(customer_id: str, product_ids: List[str], lines_min: int = 1, 
 
 def unique_value_list(sdf: DataFrame, colname: str) -> List[Any]:
     return [r[0] for r in sdf.select(colname).distinct().toLocalIterator()]
+
+
+# COMMAND ----------
+
+import shutil
+
+fake = Faker()
+
+Faker.seed(42)
+random.seed(43)
+
+raw_data_root_path = '/dbfs/data/raw'
+path_pos = os.path.join(raw_data_root_path, 'pos')
+path_cust = os.path.join(raw_data_root_path, 'customers.csv')
+path_prod = os.path.join(raw_data_root_path, 'products.csv')
+
+shutil.rmtree(path_pos, ignore_errors=True)
+shutil.rmtree(path_cust, ignore_errors=True)
+shutil.rmtree(path_prod, ignore_errors=True)
+
+sdf_customer_data = create_customer_table(fake, n_customers=300)
+sdf_product_data = create_products_table(fake)
+
+customer_ids = unique_value_list(sdf_customer_data, 'customer_id')
+product_ids = unique_value_list(sdf_product_data, 'product_id')
+
+#sdf_line_items = create_pos_table(fake, customer_ids, product_ids, n_lines_min=1, n_lines_max=10, n_baskets=500, max_amount_per_line=10)
+create_pos_jsons(fake, path_pos, customer_ids, product_ids, n_lines_min=1, n_lines_max=10, n_baskets=700, max_amount_per_line=10, date_min=datetime.datetime(year=2022, month=4, day=1), date_max=datetime.datetime(year=2022, month=7, day=1))
+
+# COMMAND ----------
+
+if not os.path.isdir(raw_data_root_path):
+    os.makedirs(raw_data_root_path)
+    
+sdf_customer_data.toPandas().to_csv(path_cust, header=True, index=False)
+sdf_product_data.toPandas().to_csv(path_prod, header=True, index=False)
+
+# COMMAND ----------
+
+

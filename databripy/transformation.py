@@ -59,6 +59,7 @@ def join_dimensional_data(sdf_pos: DataFrame, sdf_customers: DataFrame, sdf_prod
         sf.col('date'),
         sf.col('amount'),
         sf.col('product_id'),
+        sf.col('cost'),
         sf.col('product_name')
     )
 
