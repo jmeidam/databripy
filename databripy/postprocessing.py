@@ -18,6 +18,7 @@ def calculate_order_totals(sdf_pos: DataFrame) -> DataFrame:
         sf.sum('total_cost').alias('order_total_cost'),
         sf.sum('amount').alias('order_total_items')
     )
+    sdf = sdf.withColumn('order_average', sf.col('order_total_cost') / sf.col('order_total_items'))
     return sdf
 
 
