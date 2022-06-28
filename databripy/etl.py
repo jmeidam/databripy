@@ -1,6 +1,5 @@
 import logging
 from pyspark.sql import SparkSession
-import pyspark.sql.functions as sf
 from databripy import ingestion, config, transformation, postprocessing
 
 
@@ -37,9 +36,22 @@ def init_logger(name: str = None, level: int = logging.DEBUG) -> logging.Logger:
     return logger
 
 
-def main(spark_session: SparkSession, path_raw_root: str, path_processed_root: str, log_level: int):
+def main(spark_session: SparkSession, path_raw_root: str, path_processed_root: str, log_level: int = logging.INFO):
+    """Main project flow/entry-point
+
+    :param spark_session:
+    :param path_raw_root:
+        Root path to raw data
+    :param path_processed_root:
+        Root path to processed data
+    :param log_level:
+        Standard logger log level (logging.INFO by default)
+    """
 
     logger = init_logger(level=log_level)
+    logger.info('Starting project')
+    logger.info(f'Root path raw data: {path_raw_root}')
+    logger.info(f'Root path processed data: {path_processed_root}')
 
     cfg = config.get_config(path_raw_root, path_processed_root)
     spark_schema_pos = config.get_pos_schema()
@@ -67,6 +79,7 @@ def main(spark_session: SparkSession, path_raw_root: str, path_processed_root: s
     sdf_list = postprocessing.generate_scored_customer_list(sdf_pos)
 
     # Store the list to Delta
+    postprocessing.store_list(sdf_list, data_sets['scored_customer_list'])
 
 
 

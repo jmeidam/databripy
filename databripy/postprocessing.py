@@ -1,7 +1,6 @@
 import logging
 import numpy as np
 from pyspark.sql.dataframe import DataFrame
-from pyspark.sql.readwriter import DataFrameReader
 import pyspark.sql.functions as sf
 
 
@@ -60,3 +59,18 @@ def generate_scored_customer_list(sdf_pos: DataFrame) -> DataFrame:
     sdf = sdf.select('customer_id', 'client_specialness_score', 'special_client').drop_duplicates()
 
     return sdf
+
+
+def store_list(sdf_list: DataFrame, path: str):
+    """Store the list as Delta in the provided path
+
+    :param sdf_list:
+    :param path:
+        Full path to the Delta table
+    """
+    logger = logging.getLogger(__name__)
+    # Ensure the path is not prefixed with /dbfs
+    _path = path.replace('/dbfs', '')
+    logger.info(f'Writing list to Delta table at {_path}')
+
+    sdf_list.write.format('delta').save(_path)
