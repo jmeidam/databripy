@@ -3,7 +3,7 @@ from numpy import *
 
 # COMMAND ----------
 
-PATH_DATA = '/data/raw/products'
+PATH_DATA = '/data/raw/products.csv'
 
 # COMMAND ----------
 
