@@ -5,7 +5,12 @@ ADB Connectors documentation
    :maxdepth: 2
    :caption: Documentation contents:
 
-   models
+   about
+   config
+   etl
+   ingestion
+   transformation
+   postprocessing
 
 Important links
 ---------------

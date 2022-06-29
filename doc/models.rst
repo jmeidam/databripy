@@ -1,7 +1,7 @@
-.. _ref-models:
+.. _ref-config:
 
-Models module
+Config module
 =============
 
-.. automodule:: databripy.models
+.. automodule:: databripy.config
    :members:
