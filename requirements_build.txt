@@ -6,3 +6,4 @@ delta-spark
 Sphinx==5.0.1
 sphinx-rtd-theme==1.0.0
 faker==13.13.0
+numpy==1.23.0
