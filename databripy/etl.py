@@ -79,7 +79,7 @@ def main(spark_session: SparkSession, path_raw_root: str, path_processed_root: s
     sdf_list = postprocessing.generate_scored_customer_list(sdf_pos)
 
     # Store the list to Delta
-    postprocessing.store_list(sdf_list, data_sets['scored_customer_list'])
+    postprocessing.store_list(sdf_list, data_sets['scored_customer_list']['path'])
 
 
 
