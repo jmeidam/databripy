@@ -19,7 +19,7 @@ else
   dbfs cp dist/*.whl dbfs:/FileStore/wheels/ --profile "$PROFILE" --overwrite
 
   # mkdirs does not do anything if the directory already exists
-  databricks workspace mkdirs /projects/project_x --profile "$PROFILE"
-  databricks workspace import -l PYTHON --profile "$PROFILE" --overwrite adb_notebooks/main.py /projects/project_x/main
+  databricks workspace mkdirs /projects/datadays --profile "$PROFILE"
+  databricks workspace import -l PYTHON --profile "$PROFILE" --overwrite adb_notebooks/main.py /projects/datadays/main
 
 fi
